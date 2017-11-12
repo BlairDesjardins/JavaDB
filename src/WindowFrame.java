@@ -45,7 +45,7 @@ public class WindowFrame extends JFrame {
         }
         ActionListener exitListener = new ExitListener();
         close.addActionListener(exitListener);
-        
+
     }
 
 }
