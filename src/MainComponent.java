@@ -2,18 +2,31 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/* Temporary sql test */
+
+import java.sql.*;
+
 /**
  * Created by Nariman on 2017-11-11.
  */
 public class MainComponent extends JPanel {
 
-    JButton empButton, adminButton;
+    EmployeeButton empButton;
+    AdminButton adminButton;
+
+    //JDBC Driver name and database URL
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/EMP";
+
+    static final String USER = "username";
+    static final String PASS = "password";
+
 
     public MainComponent() {
 
 
-        empButton = new JButton("Employee");
-        adminButton = new JButton("Administrator");
+        empButton = new EmployeeButton("Employee");
+        adminButton = new AdminButton("Administrator");
 
         addEmpListener();
         addAdmListener();
