@@ -31,10 +31,10 @@ public class EmployeeButton extends JButton {
         try {
             //Register JDBC Driver
             Class.forName(JDBC_DRIVER);
-
             //Open connection
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
 
             //Execute query
             System.out.println("Creating statement...");
@@ -45,7 +45,6 @@ public class EmployeeButton extends JButton {
 
             while (rs.next()) {
                 String id = rs.getString("EMPNAME");
-
                 System.out.println("ID: " + id + "\n");
             }
             rs.close();
@@ -70,9 +69,6 @@ public class EmployeeButton extends JButton {
             }
 
         }
-
     }
-
-
 }
 
