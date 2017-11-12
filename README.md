@@ -21,32 +21,32 @@
 ### Entity Specific
 
 * Customer
-** Add Customer
-** Remove Customer
-** Update customer info
+  * Add Customer
+  * Remove Customer
+  * Update customer info
 
 * Sale
-** Issue Sale
-** Refund Sale
+  * Issue Sale
+  * Refund Sale
 
 * Merchandise
-** Check quantity in stock
-** Add new product
-** Remove existing product
-** Order new product
-** Update product info
+  * Check quantity in stock
+  * Add new product
+  * Remove existing product
+  * Order new product
+  * Update product info
 
 * Supplier
-** Add a supplier
-** Remove a supplier
-** Update supplier info
+  * Add a supplier
+  * Remove a supplier
+  * Update supplier info
 
 * Employee
-** Add employee
-** Remove employee
-** Update employee info
+  * Add employee
+  * Remove employee
+  * Update employee info
 
 * Mailing List
-** Add a new person to existing mailing list
-** Remove a person from an existing mailing list
-** Email recipients of mailing list something
+  * Add a new person to existing mailing list
+  * Remove a person from an existing mailing list
+  * Email recipients of mailing list something
