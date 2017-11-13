@@ -59,14 +59,10 @@ public class WindowFrame extends JFrame {
         ops.add(runQuery);
         bar.add(file);
         bar.add(ops);
-//        this.add(bar, BorderLayout.NORTH);
-        upperBar.add(bar);
-        upperBar.add(lowerBar);
+        this.add(bar, BorderLayout.NORTH);
 
-        lowerBar.add(new JTextField("Enter Username"));
-        lowerBar.add(new JPasswordField("Enter Password"));
 
-        this.add(upperBar,BorderLayout.NORTH);
+//        this.add(upperBar,BorderLayout.NORTH);
         mainComp = new MainComponent();
         this.add(mainComp);
     }
