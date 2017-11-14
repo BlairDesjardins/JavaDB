@@ -28,27 +28,26 @@ public abstract class DBSession {
         id = user;
         password = pass;
 
+
+    }
+
+    public Connection getConn() throws Exception {
         try {
             //Register JDBC Driver
             Class.forName(JDBC_DRIVER);
             //Open connection
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
 
+            if(connection != null) {
+                System.out.println("Connected.");
+                return connection;
+            }
+            else
+                throw new Exception("Connection is null");
         } catch (SQLException se) {
             se.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-    }
-
-    public Connection getConn() {
-        try {
-            throw new Exception("Connection is null");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return conn;
+        throw new Exception("Something is wrong");
     }
 }

@@ -19,14 +19,6 @@ public class EmployeeButton extends JButton {
     Statement stmt;
     public EmployeeButton(String name) {
         super(name);
-
-        this.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Logging in as an Employee");
-                loginEmployee();
-            }
-        });
     }
 
     public void loginEmployee() {
@@ -77,12 +69,10 @@ public class EmployeeButton extends JButton {
 
         try {
             sess = new EmployeeSession("Nariman","abcdefg");
-
-
-
         } catch(Exception e) {
             e.printStackTrace();
         }
+
     }
 }
 

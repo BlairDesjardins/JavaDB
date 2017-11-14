@@ -12,10 +12,14 @@ public class EmployeeSession extends DBSession {
 
     public EmployeeSession(String user, String pass) {
         super(user, pass);
-        conn = getConn();
+        try {
+            conn = getConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    String executeQuery(String q) {
+    public String executeQuery(String q) {
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT EMPNAME FROM EMPLOYEE");
