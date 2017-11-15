@@ -20,7 +20,6 @@ public class MainComponent extends JPanel {
 
     JPanel buttons;
     JPanel tablePanel;
-    JTable table;
 
     //JDBC Driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -37,7 +36,6 @@ public class MainComponent extends JPanel {
         buttons = new JPanel();
         tablePanel = new JPanel();
         this.add(buttons, BorderLayout.NORTH);
-        this.add(tablePanel, BorderLayout.SOUTH);
 
         empButton = new EmployeeButton("Employee");
         adminButton = new AdminButton("Administrator");
@@ -50,9 +48,6 @@ public class MainComponent extends JPanel {
         buttons.add(empButton);
         buttons.add(adminButton);
         buttons.add(customerButton);
-
-        JScrollPane scrollPane = new JScrollPane(table);
-        tablePanel.add(scrollPane, BorderLayout.SOUTH);
 
     }
 
@@ -83,11 +78,18 @@ public class MainComponent extends JPanel {
                 System.out.println("Run Customer Login Code Here");
                 System.out.println("Logged in!");
                 customerButton.loginCustomer();
-                //JTable table = customerButton.getTable();
-                String[][] data = {{"dog", "blue"}, {"cat", "red"}};
-                String[] cols = {"animal", "colour"};
-                JTable newTable = new JTable(data, cols);
-                table.setModel( newTable.getModel() );
+                JTable table = customerButton.getTable();
+                //String[][] data = {{"dog", "blue"}, {"cat", "red"}};
+                //String[] cols = {"animal", "colour"};
+                //JTable table = new JTable(data, cols);
+
+                JFrame frame = new JFrame();
+                frame.setLayout(new BorderLayout());
+                frame.add(new JScrollPane(table));
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+
                 System.out.println("Table added");
             }
         }
