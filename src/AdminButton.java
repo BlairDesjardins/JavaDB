@@ -9,8 +9,8 @@ import java.sql.*;
 public class AdminButton extends JButton {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:oracle:thin:@localhost:1234:orcl";
-    static final String USER = "nsaftarl";
-    static final String PASS = "04165448";
+    static final String USER = "bdesjard";
+    static final String PASS = "06200842";
 
     Connection conn;
     Statement stmt;
