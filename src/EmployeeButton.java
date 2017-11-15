@@ -9,7 +9,7 @@ import java.sql.*;
 public class EmployeeButton extends JButton {
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:oracle:thin:@localhost:1234:orcl";
+    static final String DB_URL = "jdbc:oracle:thin:@localhost:2345:orcl";
     static final String USER = "nsaftarl";
     static final String PASS = "04165448";
 
@@ -42,6 +42,7 @@ public class EmployeeButton extends JButton {
             String sql;
             sql = "SELECT EMPNAME FROM EMPLOYEE";
             ResultSet rs = stmt.executeQuery(sql);
+
 
             while (rs.next()) {
                 String id = rs.getString("EMPNAME");

@@ -19,11 +19,11 @@ public class WindowFrame extends JFrame {
 
     JButton empMode, adminMode;
 
-    JPanel upperBar;
+    JPanel mainUI;
     JTextField txtUser;
     JPasswordField txtpass;
 
-
+    JTable table;
 
     public WindowFrame() {
 
@@ -31,13 +31,20 @@ public class WindowFrame extends JFrame {
 
 
         class ExitListener implements ActionListener {
-
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         }
         ActionListener exitListener = new ExitListener();
         close.addActionListener(exitListener);
+
+        class WindowClosingListener extends WindowAdapter {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        }
+        WindowListener windowClosingListener = new WindowClosingListener();
+        this.addWindowListener(windowClosingListener);
 
     }
 
@@ -47,12 +54,12 @@ public class WindowFrame extends JFrame {
         close = new JMenuItem("Exit");
         file.add(close);
 
-        upperBar = new JPanel();
+        mainUI = new JPanel();
         JPanel lowerBar = new JPanel();
         lowerBar.setLayout(new GridLayout(0,2));
 
-        GridLayout topArea = new GridLayout(2,0);
-        upperBar.setLayout(topArea);
+        GridLayout UILayout = new GridLayout(2,0);
+        mainUI.setLayout(UILayout);
 
         ops = new JMenu("Operations");
         runQuery = new JMenuItem("Run Query");
@@ -60,11 +67,13 @@ public class WindowFrame extends JFrame {
         bar.add(file);
         bar.add(ops);
         this.add(bar, BorderLayout.NORTH);
+        this.add(mainUI, BorderLayout.CENTER);
 
-
-//        this.add(upperBar,BorderLayout.NORTH);
         mainComp = new MainComponent();
-        this.add(mainComp);
+        mainUI.add(mainComp, BorderLayout.NORTH);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        mainUI.add(scrollPane, BorderLayout.CENTER);
     }
 
 }

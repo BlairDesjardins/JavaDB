@@ -6,7 +6,7 @@ import java.sql.*;
 /**
  * Created by Nariman on 2017-11-12.
  */
-public class AdminButton extends JButton {
+public class CustomerButton extends JButton {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:oracle:thin:@localhost:2345:orcl";
     static final String USER = "nsaftarl";
@@ -14,21 +14,22 @@ public class AdminButton extends JButton {
 
     Connection conn;
     Statement stmt;
+    JTable merchTable;
 
-    public AdminButton(String name) {
+    public CustomerButton(String name) {
         super(name);
 
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Logging in as Admin...");
-                loginAdmin();
+                System.out.println("Logging in as Customer...");
+                loginCustomer();
             }
         });
 
     }
 
-    public void loginAdmin() {
+    public void loginCustomer() {
         try {
             //Register JDBC Driver
             Class.forName(JDBC_DRIVER);
@@ -41,17 +42,30 @@ public class AdminButton extends JButton {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "SELECT DEPNAME FROM DEPARTMENT";
+            sql = "SELECT * FROM MERCHANDISE";
             ResultSet rs = stmt.executeQuery(sql);
 
-            while (rs.next()) {
-                String id = rs.getString("DEPNAME");
+            String[] columnNames = {"Name", "Price", "# in Stock"};
+            String[][] data = new String[100][3];
+            int i = 0;
 
-                System.out.println("DEPNAME: " + id + "\n");
+            while (rs.next()) {
+                String name = rs.getString("PRODUCTNAME");
+                String price = rs.getString("PRICE");
+                String stock = rs.getString("STOCKNUM");
+
+                data[i][0] = name;
+                data[i][1] = price;
+                data[i][2] = stock;
+                i++;
             }
+
+            merchTable = new JTable(data, columnNames);
+
             rs.close();
             stmt.close();
             conn.close();
+
         } catch (SQLException se) {
             se.printStackTrace();
         } catch (Exception e) {
@@ -72,4 +86,5 @@ public class AdminButton extends JButton {
 
         }
     }
+
 }

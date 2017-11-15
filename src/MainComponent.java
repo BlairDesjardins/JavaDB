@@ -13,6 +13,7 @@ public class MainComponent extends JPanel {
 
     EmployeeButton empButton;
     AdminButton adminButton;
+    CustomerButton customerButton;
 
     //JDBC Driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -27,14 +28,15 @@ public class MainComponent extends JPanel {
 
         empButton = new EmployeeButton("Employee");
         adminButton = new AdminButton("Administrator");
+        customerButton = new CustomerButton("Customer");
 
         addEmpListener();
         addAdmListener();
-
+        addCusListener();
 
         this.add(empButton);
         this.add(adminButton);
-
+        this.add(customerButton);
 
     }
 
@@ -59,5 +61,14 @@ public class MainComponent extends JPanel {
         });
     }
 
+    public void addCusListener() {
+        customerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Run Customer Login Code Here");
+                System.out.println("Logged in!");
+            }
+        });
+    }
 
 }
