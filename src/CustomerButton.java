@@ -1,7 +1,9 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.Vector;
 
 /**
  * Created by Nariman on 2017-11-12.
@@ -14,7 +16,7 @@ public class CustomerButton extends JButton {
 
     Connection conn;
     Statement stmt;
-    JTable merchTable;
+    JTable table;
 
     public CustomerButton(String name) {
         super(name);
@@ -22,8 +24,6 @@ public class CustomerButton extends JButton {
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Logging in as Customer...");
-                loginCustomer();
             }
         });
 
@@ -45,22 +45,7 @@ public class CustomerButton extends JButton {
             sql = "SELECT * FROM MERCHANDISE";
             ResultSet rs = stmt.executeQuery(sql);
 
-            String[] columnNames = {"Name", "Price", "# in Stock"};
-            String[][] data = new String[100][3];
-            int i = 0;
-
-            while (rs.next()) {
-                String name = rs.getString("PRODUCTNAME");
-                String price = rs.getString("PRICE");
-                String stock = rs.getString("STOCKNUM");
-
-                data[i][0] = name;
-                data[i][1] = price;
-                data[i][2] = stock;
-                i++;
-            }
-
-            merchTable = new JTable(data, columnNames);
+            table = new JTable(buildTableModel(rs));
 
             rs.close();
             stmt.close();
@@ -85,6 +70,35 @@ public class CustomerButton extends JButton {
             }
 
         }
+    }
+
+    public static DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
+
+        ResultSetMetaData metaData = rs.getMetaData();
+
+        // names of columns
+        Vector<String> columnNames = new Vector<String>();
+        int columnCount = metaData.getColumnCount();
+        for (int column = 1; column <= columnCount; column++) {
+            columnNames.add(metaData.getColumnName(column));
+        }
+
+        // data of the table
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+        while (rs.next()) {
+            Vector<Object> vector = new Vector<Object>();
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                vector.add(rs.getObject(columnIndex));
+            }
+            data.add(vector);
+        }
+
+        return new DefaultTableModel(data, columnNames);
+
+    }
+
+    public JTable getTable() {
+        return table;
     }
 
 }

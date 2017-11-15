@@ -19,7 +19,6 @@ public class WindowFrame extends JFrame {
 
     JButton empMode, adminMode;
 
-    JPanel mainUI;
     JTextField txtUser;
     JPasswordField txtpass;
 
@@ -54,12 +53,8 @@ public class WindowFrame extends JFrame {
         close = new JMenuItem("Exit");
         file.add(close);
 
-        mainUI = new JPanel();
         JPanel lowerBar = new JPanel();
         lowerBar.setLayout(new GridLayout(0,2));
-
-        GridLayout UILayout = new GridLayout(2,0);
-        mainUI.setLayout(UILayout);
 
         ops = new JMenu("Operations");
         runQuery = new JMenuItem("Run Query");
@@ -67,13 +62,10 @@ public class WindowFrame extends JFrame {
         bar.add(file);
         bar.add(ops);
         this.add(bar, BorderLayout.NORTH);
-        this.add(mainUI, BorderLayout.CENTER);
 
         mainComp = new MainComponent();
-        mainUI.add(mainComp, BorderLayout.NORTH);
+        this.add(mainComp);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        mainUI.add(scrollPane, BorderLayout.CENTER);
     }
 
 }
