@@ -11,11 +11,12 @@ import java.awt.event.ActionListener;
 public class CustomerTab extends JPanel {
 
     ViewMerchButton viewMerchButton;
-    JButton anotherButton;
+    JButton searchMerchButton;
     JTextField searchField;
+    String searchText;
 
-    JPanel panel1;
-    JPanel panel2;
+    JPanel viewMerchPanel;
+    JPanel searchMerchPanel;
 
     //JDBC Driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -30,21 +31,36 @@ public class CustomerTab extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         viewMerchButton = new ViewMerchButton("View Merchandise");
-        anotherButton = new JButton("Another Button");
+        searchMerchButton = new JButton("Search Merchandise");
+        searchMerchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchText = searchField.getText();
+                System.out.println(searchText);
+            }
+        });
 
         JLabel search = new JLabel("Search:");
         searchField = new JTextField(20);
+        searchField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchText = searchField.getText();
+                System.out.println(searchText);
+            }
+        });
 
-        panel1 = new JPanel();
-        panel2 = new JPanel();
 
-        panel1.add(viewMerchButton);
-        panel2.add(search);
-        panel2.add(searchField);
-        panel2.add(anotherButton);
+        viewMerchPanel = new JPanel();
+        searchMerchPanel = new JPanel();
 
-        this.add(panel1);
-        this.add(panel2);
+        viewMerchPanel.add(viewMerchButton);
+        searchMerchPanel.add(search);
+        searchMerchPanel.add(searchField);
+        searchMerchPanel.add(searchMerchButton);
+
+        this.add(viewMerchPanel);
+        this.add(searchMerchPanel);
 
     }
 
