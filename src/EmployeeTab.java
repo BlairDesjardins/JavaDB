@@ -12,6 +12,10 @@ public class EmployeeTab extends CustomerTab {
 
 
     public EmployeeTab() {
+        //this.notvisible
+        //pop login pass
+        //check cred
+        //this.visible
         super();
 
     }
