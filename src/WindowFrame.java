@@ -14,7 +14,8 @@ public class WindowFrame extends JFrame {
     JMenuItem runQuery;
     JMenuBar bar2;
 
-    JPanel mainComp;
+    JPanel custTab;
+    JPanel empTab;
 
 
     JButton empMode, adminMode;
@@ -53,18 +54,21 @@ public class WindowFrame extends JFrame {
         close = new JMenuItem("Exit");
         file.add(close);
 
-        JPanel lowerBar = new JPanel();
-        lowerBar.setLayout(new GridLayout(0,2));
-
         ops = new JMenu("Operations");
         runQuery = new JMenuItem("Run Query");
         ops.add(runQuery);
         bar.add(file);
         bar.add(ops);
-        this.add(bar, BorderLayout.NORTH);
+        //this.add(bar, BorderLayout.NORTH);
 
-        mainComp = new MainComponent();
-        this.add(mainComp);
+        JTabbedPane tabbedPane = new JTabbedPane();
+
+        custTab = new CustomerTab();
+        empTab = new EmployeeTab();
+        tabbedPane.addTab("Customer Tab", custTab);
+        tabbedPane.addTab("Employee Tab", empTab);
+
+        this.add(tabbedPane);
 
     }
 

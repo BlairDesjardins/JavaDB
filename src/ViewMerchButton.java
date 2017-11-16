@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -8,9 +9,9 @@ import java.util.Vector;
 /**
  * Created by Nariman on 2017-11-12.
  */
-public class CustomerButton extends JButton {
+public class ViewMerchButton extends JButton {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:oracle:thin:@localhost:2345:orcl";
+    static final String DB_URL = "jdbc:oracle:thin:@localhost:1234:orcl";
     static final String USER = "nsaftarl";
     static final String PASS = "04165448";
 
@@ -18,12 +19,25 @@ public class CustomerButton extends JButton {
     Statement stmt;
     JTable table;
 
-    public CustomerButton(String name) {
+    public ViewMerchButton(String name) {
         super(name);
 
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Run Customer Login Code Here");
+                System.out.println("Logged in!");
+
+                //Connects to database and returns a table of the merch
+                loginCustomer();
+                JFrame frame = new JFrame();
+                frame.setLayout(new BorderLayout());
+                frame.add(new JScrollPane(table));
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+
+                System.out.println("Table displayed");
             }
         });
 
@@ -95,10 +109,6 @@ public class CustomerButton extends JButton {
 
         return new DefaultTableModel(data, columnNames);
 
-    }
-
-    public JTable getTable() {
-        return table;
     }
 
 }
