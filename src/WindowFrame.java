@@ -51,7 +51,7 @@ public class WindowFrame extends JFrame {
         buttonPanel = new ButtonPanel();
         setButtonListeners();
         this.add(buttonPanel);
-
+//
         windowBody = new JPanel();
         this.add(windowBody,BorderLayout.SOUTH);
 
@@ -77,7 +77,9 @@ public class WindowFrame extends JFrame {
         buttonPanel.getButton("Employee").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                hideButtons();
+
+                buttonPanel.hideLoginButtons();
+                buttonPanel.showEmpButtons();
                 textFieldPanel = new JPanel(new GridLayout(1,3));
                     txtUser = new JTextField("Username");
                     txtPass = new JPasswordField("Password");
@@ -87,6 +89,11 @@ public class WindowFrame extends JFrame {
                 textFieldPanel.add(loginButton);
                 addloginListener();
                 windowBody.add(textFieldPanel);
+                windowBody.setVisible(true);
+
+                repaint();
+                revalidate();
+
             }
         });
     }
@@ -102,6 +109,8 @@ public class WindowFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String user = txtUser.getText();
                 String pass = txtPass.getPassword().toString();
+                System.out.println(user);
+                System.out.println(pass);
                 mgr = new SessionManager("Employee",user,pass);
             }
         });

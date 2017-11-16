@@ -8,7 +8,7 @@ public class JavaDB {
 
     public static void main(String[] args) {
         WindowFrame frame = new WindowFrame();
-        frame.setSize(500,500);
+        frame.setSize(900,900);
         frame.setVisible(true);
     }
 }
