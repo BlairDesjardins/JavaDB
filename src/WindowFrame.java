@@ -29,7 +29,6 @@ public class WindowFrame extends JFrame {
 
         instantiate();
 
-
         class ExitListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);

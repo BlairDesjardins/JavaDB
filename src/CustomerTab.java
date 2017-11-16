@@ -50,7 +50,6 @@ public class CustomerTab extends JPanel {
             }
         });
 
-
         viewMerchPanel = new JPanel();
         searchMerchPanel = new JPanel();
 
