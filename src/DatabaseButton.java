@@ -9,7 +9,7 @@ import java.util.Vector;
 /**
  * Created by Nariman on 2017-11-12.
  */
-public class ViewMerchButton extends JButton {
+public class DatabaseButton extends JButton {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:oracle:thin:@localhost:1234:orcl";
     static final String USER = "nsaftarl";
@@ -19,17 +19,13 @@ public class ViewMerchButton extends JButton {
     Statement stmt;
     JTable table;
 
-    public ViewMerchButton(String name) {
+    public DatabaseButton(String name, String query) {
         super(name);
-
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Run Customer Login Code Here");
-                System.out.println("Logged in!");
-
                 //Connects to database and returns a table of the merch
-                loginCustomer();
+                loginCustomer(query);
                 JFrame frame = new JFrame();
                 frame.setLayout(new BorderLayout());
                 frame.add(new JScrollPane(table));
@@ -40,10 +36,9 @@ public class ViewMerchButton extends JButton {
                 System.out.println("Table displayed");
             }
         });
-
     }
 
-    public void loginCustomer() {
+    public void loginCustomer(String query) {
         try {
             //Register JDBC Driver
             Class.forName(JDBC_DRIVER);
@@ -55,9 +50,7 @@ public class ViewMerchButton extends JButton {
             //Execute query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT * FROM MERCHANDISE";
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery(query);
 
             table = new JTable(buildTableModel(rs));
 

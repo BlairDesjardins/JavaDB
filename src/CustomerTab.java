@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
  */
 public class CustomerTab extends JPanel {
 
-    ViewMerchButton viewMerchButton;
+    DatabaseButton viewMerchButton;
     JButton searchMerchButton;
     JTextField searchField;
     String searchText;
@@ -30,7 +30,7 @@ public class CustomerTab extends JPanel {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        viewMerchButton = new ViewMerchButton("View Merchandise");
+        viewMerchButton = new DatabaseButton("View Merchandise", "SELECT * FROM MERCHANDISE");
         searchMerchButton = new JButton("Search Merchandise");
         searchMerchButton.addActionListener(new ActionListener() {
             @Override
