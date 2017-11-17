@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class CustomerTab extends JPanel {
 
     DatabaseButton viewMerchButton;
-    JButton searchMerchButton;
+    DatabaseButton searchMerchButton;
     JTextField searchField;
     String searchText;
 
@@ -25,31 +25,35 @@ public class CustomerTab extends JPanel {
     static final String USER = "username";
     static final String PASS = "password";
 
+    static final String viewQuery = "SELECT * FROM MERCHANDISE";
+    static final String searchQuery = "SELECT * FROM NSAFTARL.MERCHANDISE WHERE lower(PRODUCTNAME) LIKE ";
 
     public CustomerTab() {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        viewMerchButton = new DatabaseButton("View Merchandise", "SELECT * FROM MERCHANDISE");
-        searchMerchButton = new JButton("Search Merchandise");
+        viewMerchButton = new DatabaseButton("View Merchandise", viewQuery);
+        searchMerchButton = new DatabaseButton("Search Merchandise", null);
+
+        JLabel search = new JLabel("Search:");
+        searchField = new JTextField(20);
+
         searchMerchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchText = searchField.getText();
-                System.out.println(searchText);
+                String query = searchQuery + "lower('%" + searchText + "%')";
+                searchMerchButton.setQuery(query);
             }
         });
-
-        JLabel search = new JLabel("Search:");
-        searchField = new JTextField(20);
         searchField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchText = searchField.getText();
-                System.out.println(searchText);
+                String query = searchQuery + "lower('%" + searchText + "%')";
+                searchMerchButton.makeTableFromQuery(query);
             }
         });
-
 
         viewMerchPanel = new JPanel();
         searchMerchPanel = new JPanel();

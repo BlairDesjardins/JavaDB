@@ -17,28 +17,22 @@ public class DatabaseButton extends JButton {
 
     Connection conn;
     Statement stmt;
+    String query;
     JTable table;
 
-    public DatabaseButton(String name, String query) {
+    public DatabaseButton(String name, String aQuery) {
         super(name);
+        query = aQuery;
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Connects to database and returns a table of the merch
-                loginCustomer(query);
-                JFrame frame = new JFrame();
-                frame.setLayout(new BorderLayout());
-                frame.add(new JScrollPane(table));
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-
-                System.out.println("Table displayed");
+                makeTableFromQuery(query);
             }
         });
     }
 
-    public void loginCustomer(String query) {
+    public void makeTableFromQuery(String query) {
         try {
             //Register JDBC Driver
             Class.forName(JDBC_DRIVER);
@@ -53,6 +47,15 @@ public class DatabaseButton extends JButton {
             ResultSet rs = stmt.executeQuery(query);
 
             table = new JTable(buildTableModel(rs));
+
+            JFrame frame = new JFrame();
+            frame.setLayout(new BorderLayout());
+            frame.add(new JScrollPane(table));
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+
+            System.out.println("Table displayed");
 
             rs.close();
             stmt.close();
@@ -102,6 +105,10 @@ public class DatabaseButton extends JButton {
 
         return new DefaultTableModel(data, columnNames);
 
+    }
+
+    public void setQuery(String aQuery) {
+        query = aQuery;
     }
 
 }
