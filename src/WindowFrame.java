@@ -16,6 +16,7 @@ public class WindowFrame extends JFrame {
 
     JPanel custTab;
     JPanel empTab;
+    JPanel admTab;
 
 
     JButton empMode, adminMode;
@@ -65,8 +66,10 @@ public class WindowFrame extends JFrame {
 
         custTab = new CustomerTab();
         empTab = new EmployeeTab();
+        admTab = new AdminTab();
         tabbedPane.addTab("Customer Tab", custTab);
         tabbedPane.addTab("Employee Tab", empTab);
+        tabbedPane.addTab("Admin Tab", admTab);
 
         this.add(tabbedPane);
 
