@@ -17,19 +17,10 @@ public class DatabaseButton extends JButton {
 
     Connection conn;
     Statement stmt;
-    String query;
     JTable table;
 
-    public DatabaseButton(String name, String aQuery) {
+    public DatabaseButton(String name) {
         super(name);
-        query = aQuery;
-        this.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Connects to database and returns a table of the merch
-                makeTableFromQuery(query);
-            }
-        });
     }
 
     public void makeTableFromQuery(String query) {
@@ -82,6 +73,47 @@ public class DatabaseButton extends JButton {
         }
     }
 
+    public void executeCommand(String command) {
+        try {
+            //Register JDBC Driver
+            Class.forName(JDBC_DRIVER);
+
+            //Open connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //Execute query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+
+            stmt.execute(command);
+
+            System.out.println("Command executed!");
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(stmt != null) {
+                    stmt.close();
+                }
+            } catch(SQLException se2) {}
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+
+        }
+    }
+
     public static DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
 
         ResultSetMetaData metaData = rs.getMetaData();
@@ -105,10 +137,6 @@ public class DatabaseButton extends JButton {
 
         return new DefaultTableModel(data, columnNames);
 
-    }
-
-    public void setQuery(String aQuery) {
-        query = aQuery;
     }
 
 }

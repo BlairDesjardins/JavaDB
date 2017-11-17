@@ -26,24 +26,31 @@ public class CustomerTab extends JPanel {
     static final String PASS = "password";
 
     static final String viewQuery = "SELECT * FROM MERCHANDISE";
-    static final String searchQuery = "SELECT * FROM NSAFTARL.MERCHANDISE WHERE lower(PRODUCTNAME) LIKE ";
+    static final String searchQuery = "SELECT * FROM MERCHANDISE WHERE lower(PRODUCTNAME) LIKE ";
 
     public CustomerTab() {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        viewMerchButton = new DatabaseButton("View Merchandise", viewQuery);
-        searchMerchButton = new DatabaseButton("Search Merchandise", null);
+        viewMerchButton = new DatabaseButton("View Merchandise");
+        searchMerchButton = new DatabaseButton("Search Merchandise");
 
         JLabel search = new JLabel("Search:");
         searchField = new JTextField(20);
+
+        viewMerchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchMerchButton.makeTableFromQuery(viewQuery);
+            }
+        });
 
         searchMerchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchText = searchField.getText();
                 String query = searchQuery + "lower('%" + searchText + "%')";
-                searchMerchButton.setQuery(query);
+                searchMerchButton.makeTableFromQuery(query);
             }
         });
         searchField.addActionListener(new ActionListener() {
@@ -57,6 +64,8 @@ public class CustomerTab extends JPanel {
 
         viewMerchPanel = new JPanel();
         searchMerchPanel = new JPanel();
+        viewMerchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+        searchMerchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 
         viewMerchPanel.add(viewMerchButton);
         searchMerchPanel.add(search);
