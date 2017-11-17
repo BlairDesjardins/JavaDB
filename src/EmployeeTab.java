@@ -10,23 +10,18 @@ import java.awt.event.ActionListener;
  */
 public class EmployeeTab extends CustomerTab {
 
-    int currentEmployee = 2;
-    DatabaseButton issueSaleButton;
+    private int currentEmployee = 2;
 
-    JPanel issueSalePanel;
-
-    JTextField emailField;
-    JTextField productNoField;
-    static final String issueSaleQuery = "INSERT INTO BUYS (PRODUCTNO, FROMSTAFF, CUSTOMER) VALUES (";
+    private static final String issueSaleQuery = "INSERT INTO BUYS (PRODUCTNO, FROMSTAFF, CUSTOMER) VALUES (";
 
     public EmployeeTab() {
         super();
 
-        issueSaleButton = new DatabaseButton("Issue Sale");
+        DatabaseButton issueSaleButton = new DatabaseButton("Issue Sale");
         JLabel customerEmailLabel = new JLabel("Customer Email:");
         JLabel productNoLabel = new JLabel("Product Number:");
-        emailField = new JTextField(15);
-        productNoField = new JTextField(2);
+        JTextField emailField = new JTextField(15);
+        JTextField productNoField = new JTextField(2);
 
         issueSaleButton.addActionListener(new ActionListener() {
             @Override
@@ -39,7 +34,7 @@ public class EmployeeTab extends CustomerTab {
         });
 
 
-        issueSalePanel = new JPanel();
+        JPanel issueSalePanel = new JPanel();
         issueSalePanel.setBorder(BorderFactory.createRaisedBevelBorder());
         issueSalePanel.setLayout(new FlowLayout());
 

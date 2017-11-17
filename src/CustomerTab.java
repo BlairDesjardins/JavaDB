@@ -1,42 +1,25 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/* Temporary sql test */
 
 /**
  * Created by Nariman on 2017-11-11.
  */
 public class CustomerTab extends JPanel {
 
-    DatabaseButton viewMerchButton;
-    DatabaseButton searchMerchButton;
-    JTextField searchField;
-    String searchText;
-
-    JPanel viewMerchPanel;
-    JPanel searchMerchPanel;
-
-    //JDBC Driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/EMP";
-
-    static final String USER = "username";
-    static final String PASS = "password";
-
-    static final String viewQuery = "SELECT * FROM MERCHANDISE";
-    static final String searchQuery = "SELECT * FROM MERCHANDISE WHERE lower(PRODUCTNAME) LIKE ";
+    private static final String viewQuery = "SELECT * FROM MERCHANDISE";
+    private static final String searchQuery = "SELECT * FROM MERCHANDISE WHERE lower(PRODUCTNAME) LIKE ";
 
     public CustomerTab() {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        viewMerchButton = new DatabaseButton("View Merchandise");
-        searchMerchButton = new DatabaseButton("Search Merchandise");
+        DatabaseButton viewMerchButton = new DatabaseButton("View Merchandise");
+        DatabaseButton searchMerchButton = new DatabaseButton("Search Merchandise");
 
         JLabel search = new JLabel("Search:");
-        searchField = new JTextField(20);
+        JTextField searchField = new JTextField(20);
 
         viewMerchButton.addActionListener(new ActionListener() {
             @Override
@@ -48,7 +31,7 @@ public class CustomerTab extends JPanel {
         searchMerchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                searchText = searchField.getText();
+                String searchText = searchField.getText();
                 String query = searchQuery + "lower('%" + searchText + "%')";
                 searchMerchButton.makeTableFromQuery(query);
             }
@@ -56,14 +39,14 @@ public class CustomerTab extends JPanel {
         searchField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                searchText = searchField.getText();
+                String searchText = searchField.getText();
                 String query = searchQuery + "lower('%" + searchText + "%')";
                 searchMerchButton.makeTableFromQuery(query);
             }
         });
 
-        viewMerchPanel = new JPanel();
-        searchMerchPanel = new JPanel();
+        JPanel viewMerchPanel = new JPanel();
+        JPanel searchMerchPanel = new JPanel();
         viewMerchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         searchMerchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 

@@ -3,28 +3,11 @@
  */
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class WindowFrame extends JFrame {
-    JMenuBar bar;
-    JMenu file;
-    JMenuItem close;
-    JMenu ops;
-    JMenuItem runQuery;
-    JMenuBar bar2;
 
-    JPanel custTab;
-    JPanel empTab;
-    JPanel admTab;
-
-
-    JButton empMode, adminMode;
-
-    JTextField txtUser;
-    JPasswordField txtpass;
-
-    JTable table;
+    private JMenuItem close;
 
     public WindowFrame() {
 
@@ -49,14 +32,14 @@ public class WindowFrame extends JFrame {
 
     }
 
-    public void instantiate(){
-        bar = new JMenuBar();
-        file = new JMenu("File");
+    private void instantiate(){
+        JMenuBar bar = new JMenuBar();
+        JMenu file = new JMenu("File");
         close = new JMenuItem("Exit");
         file.add(close);
 
-        ops = new JMenu("Operations");
-        runQuery = new JMenuItem("Run Query");
+        JMenu ops = new JMenu("Operations");
+        JMenuItem runQuery = new JMenuItem("Run Query");
         ops.add(runQuery);
         bar.add(file);
         bar.add(ops);
@@ -64,9 +47,9 @@ public class WindowFrame extends JFrame {
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        custTab = new CustomerTab();
-        empTab = new EmployeeTab();
-        admTab = new AdminTab();
+        JPanel custTab = new CustomerTab();
+        JPanel empTab = new EmployeeTab();
+        JPanel admTab = new AdminTab();
         tabbedPane.addTab("Customer Tab", custTab);
         tabbedPane.addTab("Employee Tab", empTab);
         tabbedPane.addTab("Admin Tab", admTab);

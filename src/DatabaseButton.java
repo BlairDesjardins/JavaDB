@@ -10,14 +10,13 @@ import java.util.Vector;
  * Created by Nariman on 2017-11-12.
  */
 public class DatabaseButton extends JButton {
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:oracle:thin:@localhost:1234:orcl";
-    static final String USER = "nsaftarl";
-    static final String PASS = "04165448";
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:oracle:thin:@localhost:1234:orcl";
+    private static final String USER = "nsaftarl";
+    private static final String PASS = "04165448";
 
-    Connection conn;
-    Statement stmt;
-    JTable table;
+    private Connection conn;
+    private Statement stmt;
 
     public DatabaseButton(String name) {
         super(name);
@@ -37,7 +36,7 @@ public class DatabaseButton extends JButton {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
-            table = new JTable(buildTableModel(rs));
+            JTable table = new JTable(buildTableModel(rs));
 
             JFrame frame = new JFrame();
             frame.setLayout(new BorderLayout());
