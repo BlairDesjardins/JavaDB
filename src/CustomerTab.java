@@ -11,15 +11,20 @@ public class CustomerTab extends JPanel {
     private static final String viewQuery = "SELECT * FROM MERCHANDISE";
     private static final String searchQuery = "SELECT * FROM MERCHANDISE WHERE lower(PRODUCTNAME) LIKE ";
 
+    DatabaseButton viewMerchButton, searchMerchButton;
+
+    JTextField searchField;
+    JLabel search;
+
     public CustomerTab() {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        DatabaseButton viewMerchButton = new DatabaseButton("View Merchandise");
-        DatabaseButton searchMerchButton = new DatabaseButton("Search Merchandise");
+        viewMerchButton = new DatabaseButton("View Merchandise");
+        searchMerchButton = new DatabaseButton("Search Merchandise");
 
-        JLabel search = new JLabel("Search:");
-        JTextField searchField = new JTextField(20);
+        search = new JLabel("Search:");
+        searchField = new JTextField(20);
 
         viewMerchButton.addActionListener(new ActionListener() {
             @Override

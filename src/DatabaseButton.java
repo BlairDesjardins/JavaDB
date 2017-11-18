@@ -73,6 +73,7 @@ public class DatabaseButton extends JButton {
     }
 
     public void executeCommand(String command) {
+
         try {
             //Register JDBC Driver
             Class.forName(JDBC_DRIVER);

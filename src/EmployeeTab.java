@@ -12,16 +12,20 @@ public class EmployeeTab extends CustomerTab {
 
     private int currentEmployee = 2;
 
+    JLabel customerEmailLabel, productNoLabel;
+    JTextField emailField, productNoField;
+    DatabaseButton issueSaleButton;
+
     private static final String issueSaleQuery = "INSERT INTO BUYS (PRODUCTNO, FROMSTAFF, CUSTOMER) VALUES (";
 
     public EmployeeTab() {
         super();
 
-        DatabaseButton issueSaleButton = new DatabaseButton("Issue Sale");
-        JLabel customerEmailLabel = new JLabel("Customer Email:");
-        JLabel productNoLabel = new JLabel("Product Number:");
-        JTextField emailField = new JTextField(15);
-        JTextField productNoField = new JTextField(2);
+        issueSaleButton = new DatabaseButton("Issue Sale");
+        customerEmailLabel = new JLabel("Customer Email:");
+        productNoLabel = new JLabel("Product Number:");
+        emailField = new JTextField(15);
+        productNoField = new JTextField(2);
 
         issueSaleButton.addActionListener(new ActionListener() {
             @Override
