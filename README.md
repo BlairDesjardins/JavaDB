@@ -13,8 +13,8 @@
 ## Functionality TODO:
 
 ### General
-* Build general UI
-* Connect UI to database
+* ~Build general UI~
+* ~Connect UI to database~
 * Add authentication for user accounts and managers (Optional)
 
 
