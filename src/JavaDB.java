@@ -9,7 +9,7 @@ public class JavaDB {
 //        LoginWindow loginWindow = new LoginWindow();
 //        loginWindow.setSize(500,500);
 //        loginWindow.setVisible(true);
-        frame.setSize(500,500);
+        frame.setSize(800,800);
         frame.setVisible(true);
     }
 }

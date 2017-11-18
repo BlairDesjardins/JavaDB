@@ -31,26 +31,11 @@ public class WindowFrame extends JFrame {
     private JTabbedPane tabbedPane;
     private JPanel custTab, empTab, admTab;
 
-    int n;
     boolean loggedIn;
 
     public WindowFrame() {
 
         instantiate();
-
-//        Object[] options = {"Guest", "Employee", "Administrator"};
-//
-//        int n = JOptionPane.showOptionDialog(
-//                this,
-//                "Which type of account would you like to log in as?\n",
-//                "Log In",
-//                JOptionPane.YES_NO_CANCEL_OPTION,
-//                JOptionPane.QUESTION_MESSAGE,
-//                null,
-//                options,
-//                options[2]
-//        );
-
 
         class ExitListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +52,6 @@ public class WindowFrame extends JFrame {
         }
         WindowListener windowClosingListener = new WindowClosingListener();
         this.addWindowListener(windowClosingListener);
-
     }
 
     private void instantiate(){
@@ -81,7 +65,6 @@ public class WindowFrame extends JFrame {
         ops.add(runQuery);
         bar.add(file);
         bar.add(ops);
-        //this.add(bar, BorderLayout.NORTH);
 
         tabbedPane = new JTabbedPane();
 
@@ -100,13 +83,13 @@ public class WindowFrame extends JFrame {
     public void addTabListeners() {
         final JTextField userField = new JTextField(20);
         final JPasswordField passwordField = new JPasswordField(20);
+        final JPanel loginPanel = new JPanel();
+        final JOptionPane optionPane = new JOptionPane();
 
         JButton[] buttonList = new JButton[2];
             buttonList[0] = new JButton("Submit");
             buttonList[1] = new JButton("Cancel");
 
-//        JOptionPane optionPane;
-        final JPanel loginPanel = new JPanel();
         loginPanel.add(new JLabel("Username: "));
         loginPanel.add(userField);
         loginPanel.add(Box.createHorizontalStrut(15));
@@ -114,20 +97,12 @@ public class WindowFrame extends JFrame {
         loginPanel.add(passwordField);
         loginPanel.setSize(300,300);
 
-        Object[] options = {"Guest", "Employee", "Administrator"};
-
-
-        final JOptionPane optionPane = new JOptionPane();
-
-
 
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
 
                 if(tabbedPane.getSelectedIndex() == 1 || tabbedPane.getSelectedIndex() == 2) {
-
-
                     optionPane.setSize(300,300);
                     optionPane.setVisible(true);
                     optionPane.createDialog(loginPanel,"sakdfljasd");
@@ -185,11 +160,6 @@ public class WindowFrame extends JFrame {
                 conn.close();
                 return true;
             }
-
-//            System.out.println("Command executed!");
-
-
-
         } catch (SQLException se) {
             se.printStackTrace();
         } catch (Exception e) {
