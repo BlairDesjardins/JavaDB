@@ -2,10 +2,24 @@
  * Created by Nariman on 2017-11-11.
  */
 
+import com.sun.codemodel.internal.JOp;
+
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 
 public class WindowFrame extends JFrame {
+
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:oracle:thin:@localhost:1234:orcl";
+    private static final String USER = "nsaftarl";
+    private static final String PASS = "04165448";
+
+    Connection conn;
+    Statement stmt;
 
     private JMenuBar bar;
     private JMenu file;
@@ -16,6 +30,9 @@ public class WindowFrame extends JFrame {
 
     private JTabbedPane tabbedPane;
     private JPanel custTab, empTab, admTab;
+
+    int n;
+    boolean loggedIn;
 
     public WindowFrame() {
 
@@ -75,12 +92,136 @@ public class WindowFrame extends JFrame {
         tabbedPane.addTab("Employee Tab", empTab);
         tabbedPane.addTab("Admin Tab", admTab);
 
+        addTabListeners();
         this.add(tabbedPane);
 
     }
 
     public void addTabListeners() {
+        final JTextField userField = new JTextField(20);
+        final JPasswordField passwordField = new JPasswordField(20);
 
+        JButton[] buttonList = new JButton[2];
+            buttonList[0] = new JButton("Submit");
+            buttonList[1] = new JButton("Cancel");
+
+//        JOptionPane optionPane;
+        final JPanel loginPanel = new JPanel();
+        loginPanel.add(new JLabel("Username: "));
+        loginPanel.add(userField);
+        loginPanel.add(Box.createHorizontalStrut(15));
+        loginPanel.add(new JLabel("Password: "));
+        loginPanel.add(passwordField);
+        loginPanel.setSize(300,300);
+
+        Object[] options = {"Guest", "Employee", "Administrator"};
+
+
+        final JOptionPane optionPane = new JOptionPane();
+
+
+
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+
+                if(tabbedPane.getSelectedIndex() == 1 || tabbedPane.getSelectedIndex() == 2) {
+
+
+                    optionPane.setSize(300,300);
+                    optionPane.setVisible(true);
+                    optionPane.createDialog(loginPanel,"sakdfljasd");
+                    int choice = optionPane.showConfirmDialog(
+                            tabbedPane,
+                            loginPanel,
+                            "Log In",
+                            JOptionPane.OK_CANCEL_OPTION
+                    );
+                    System.out.println(choice);
+
+                    if(choice == 0) {
+                        loggedIn = tryToLogIn(userField.getText(), new String(passwordField.getPassword()));
+                        if(!loggedIn)
+                            tabbedPane.setSelectedIndex(0);
+                    }
+                    else {
+                        tabbedPane.setSelectedIndex(0);
+                    }
+                }
+            }
+        });
+
+    }
+
+    public boolean tryToLogIn(String username, String password) {
+        String loginQuery = "SELECT * FROM EMPLOYEE WHERE USERNAME='" + username + "' AND PASSWORD='" + password + "'";
+
+
+        try {
+            //Register JDBC Driver
+            Class.forName(JDBC_DRIVER);
+
+            //Open connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //Execute query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(loginQuery);
+
+            if(isResultSetEmpty(rs)) {
+                System.out.println("Command executed!");
+                System.out.println("USERNAME AND/OR PASSWORD ARE WRONG");
+                stmt.close();
+                conn.close();
+                return false;
+            }
+            else {
+                System.out.println("Command executed!");
+                System.out.println("LOGGED IN");
+                stmt.close();
+                conn.close();
+                return true;
+            }
+
+//            System.out.println("Command executed!");
+
+
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(stmt != null) {
+                    stmt.close();
+                }
+            } catch(SQLException se2) {}
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+
+        }
+        return false;
+
+    }
+
+    public boolean isResultSetEmpty(ResultSet rs) {
+        try {
+            if (!rs.next()) {
+                return true;
+            }
+        } catch(SQLException se) {
+            se.printStackTrace();
+        }
+        return false;
     }
 
 }
