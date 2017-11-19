@@ -15,7 +15,7 @@
 ### General
 * ~Build general UI~
 * ~Connect UI to database~
-* Add authentication for user accounts and managers (Optional)
+* ~Add authentication for user accounts and managers (Optional)~
 
 
 ### Entity Specific
@@ -30,10 +30,10 @@
   * Refund Sale
 
 * Merchandise
-  * Check quantity in stock
+  * ~Check quantity in stock~
   * Add new product
   * Remove existing product
-  * Order new product
+  * ~Order new product~
   * Update product info
 
 * Supplier
