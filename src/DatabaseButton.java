@@ -114,6 +114,73 @@ public class DatabaseButton extends JButton {
         }
     }
 
+    public String executeCommand(String command,String neededValue) {
+        ResultSet resultSet;
+
+
+        try {
+            //Register JDBC Driver
+            Class.forName(JDBC_DRIVER);
+
+            //Open connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //Execute query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+
+            resultSet = stmt.executeQuery(command);
+
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int numberOfColumns = resultSetMetaData.getColumnCount();
+
+            for(int i = 1; i < numberOfColumns+1; i++) {
+                String colName = resultSetMetaData.getColumnName(i);
+                if(neededValue.equals(colName))
+                    System.out.println("COLNAME: " + colName);
+                resultSet.next();
+
+
+                String name = resultSet.getString(colName);
+
+                System.out.println(name);
+                return name;
+
+            }
+//
+//            while(resultSet.next()) {
+//                String val = resultSet.getCursorName();
+//                System.out.println(val);
+//            }
+
+            System.out.println("Command executed!");
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(stmt != null) {
+                    stmt.close();
+                }
+            } catch(SQLException se2) {}
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+
+        }
+        return null;
+    }
+
     public static DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
 
         ResultSetMetaData metaData = rs.getMetaData();
