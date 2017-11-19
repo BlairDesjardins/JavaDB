@@ -16,6 +16,8 @@ public class CustomerTab extends JPanel {
     JTextField searchField;
     JLabel search;
 
+    JPanel viewMerchPanel, searchMerchPanel;
+
     public CustomerTab() {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -50,8 +52,8 @@ public class CustomerTab extends JPanel {
             }
         });
 
-        JPanel viewMerchPanel = new JPanel();
-        JPanel searchMerchPanel = new JPanel();
+        viewMerchPanel = new JPanel();
+        searchMerchPanel = new JPanel();
         viewMerchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         searchMerchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 
