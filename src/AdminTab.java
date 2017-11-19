@@ -8,15 +8,12 @@ public class AdminTab extends EmployeeTab{
 
     private static final String viewSupps = "SELECT * FROM SUPPLIER";
     private static final String placeOrder = "INSERT INTO ORDEREDFROM(BUYCOST,QUANTITY,PRODUCTNO,SUPPLIERNAME) VALUES(";
-//    private static final String getBuyCost = "SELECT BUYCOST FROM SUPPLIER WHERE EMP"
 
-    JPanel supplierPanel, mailingListPanel, refundPanel, empDetailsPanel,merchPanel,orderPanel;
     DatabaseButton supplierButton, mailingListButton, refundButton, empDetailsButton, merchButton, orderButton;
-
-    String typeOrdered, prodOrdered, amountOrdered;
+    JPanel supplierPanel, mailingListPanel, refundPanel, empDetailsPanel,merchPanel,orderPanel;
     JTextField id, quantity;
 
-
+    String typeOrdered, prodOrdered, amountOrdered;
 
     public AdminTab() {
         super();
@@ -49,7 +46,7 @@ public class AdminTab extends EmployeeTab{
         final DatabaseButton getSupps = new DatabaseButton("View All Suppliers");
         final DatabaseButton orderStuff = new DatabaseButton("Place an Order");
 
-
+        //To see all of the suppliers
         getSupps.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,6 +54,7 @@ public class AdminTab extends EmployeeTab{
             }
         });
 
+        //Creates a popup window to deal with ordering
         orderStuff.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,23 +68,21 @@ public class AdminTab extends EmployeeTab{
     }
 
     public void createOrderWindow(){
-        final JFrame orderWindow = new JFrame("Order Manager");
         String[] choices = {"Music", "Movies", "Apparel", "Other"};
 
-
-        JLabel prodType, prodNum, prodQ;
         final DatabaseButton submitButton = new DatabaseButton("Submit Order");
+        final JFrame orderWindow = new JFrame("Order Manager");
+        final JComboBox<String> dropDown = new JComboBox<String>(choices);
+            dropDown.setVisible(true);
 
-
-        prodType = new JLabel("Type:");
-        prodNum = new JLabel("Product ID:");
-        prodQ = new JLabel("Quantity:");
+        JLabel prodType = new JLabel("Type:");
+        JLabel prodNum = new JLabel("Product ID:");
+        JLabel prodQ = new JLabel("Quantity:");
 
         id = new JTextField(8);
         quantity = new JTextField(5);
 
-        final JComboBox<String> dropDown = new JComboBox<String>(choices);
-            dropDown.setVisible(true);
+
 
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -94,10 +90,6 @@ public class AdminTab extends EmployeeTab{
                 typeOrdered = dropDown.getSelectedItem().toString();
                 prodOrdered = id.getText();
                 amountOrdered = quantity.getText();
-
-                System.out.println(typeOrdered);
-                System.out.println(prodOrdered);
-                System.out.println(amountOrdered);
 
                 String cName = submitButton.executeCommand("SELECT COMPANYNAME FROM SUPPLIER S WHERE S.MERCHTYPE='" + typeOrdered + "'","COMPANYNAME");
                 if(cName != null) {

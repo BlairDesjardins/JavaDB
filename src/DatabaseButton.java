@@ -117,7 +117,6 @@ public class DatabaseButton extends JButton {
     public String executeCommand(String command,String neededValue) {
         ResultSet resultSet;
 
-
         try {
             //Register JDBC Driver
             Class.forName(JDBC_DRIVER);
@@ -138,21 +137,16 @@ public class DatabaseButton extends JButton {
             for(int i = 1; i < numberOfColumns+1; i++) {
                 String colName = resultSetMetaData.getColumnName(i);
                 if(neededValue.equals(colName))
-                    System.out.println("COLNAME: " + colName);
+//                    System.out.println("COLNAME: " + colName);
                 resultSet.next();
 
 
                 String name = resultSet.getString(colName);
 
-                System.out.println(name);
+//                System.out.println(name);
                 return name;
 
             }
-//
-//            while(resultSet.next()) {
-//                String val = resultSet.getCursorName();
-//                System.out.println(val);
-//            }
 
             System.out.println("Command executed!");
 
