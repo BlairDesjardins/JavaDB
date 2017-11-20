@@ -10,6 +10,8 @@ public class AdminTab extends EmployeeTab{
     private static final String placeOrder = "INSERT INTO ORDEREDFROM(BUYCOST,QUANTITY,PRODUCTNO,SUPPLIERNAME) VALUES(";
     private static final String addEmployee = "INSERT INTO EMPLOYEE (EMPNUM, EMPNAME, SIN) VALUES (";
     private static final String addEmployeeToDept = "INSERT INTO WORKSIN (EMPNUM, DEPNUM) VALUES (";
+    private static final String removeEmployee = "DELETE FROM EMPLOYEE WHERE EMPNUM = ";
+    private static final String removeEmployeeFromDept = "DELETE FROM WORKSIN WHERE EMPNUM = ";
 
     DatabaseButton supplierButton, mailingListButton, refundButton, empDetailsButton, merchButton, orderButton;
     JPanel supplierPanel, mailingListPanel, refundPanel, empDetailsPanel,merchPanel,orderPanel;
@@ -142,6 +144,7 @@ public class AdminTab extends EmployeeTab{
         final JFrame employeeWindow = new JFrame("Employee Manager");
 
         final DatabaseButton addEmpButton = new DatabaseButton("Add Employee");
+        final DatabaseButton removeEmpButton = new DatabaseButton("Remove Employee");
 
         empNum = new JLabel("Employee Number:");
         empName = new JLabel("Employee Name:");
@@ -165,6 +168,15 @@ public class AdminTab extends EmployeeTab{
             }
         });
 
+        removeEmpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String empNumString = empNumField.getText();
+                addEmpButton.executeCommand(removeEmployeeFromDept + empNumString);
+                addEmpButton.executeCommand(removeEmployee + empNumString);
+            }
+        });
+
         employeeWindow.setLayout(new FlowLayout());
         employeeWindow.add(Box.createVerticalStrut(100));
         employeeWindow.add(empNum);
@@ -184,6 +196,7 @@ public class AdminTab extends EmployeeTab{
         employeeWindow.add(Box.createHorizontalStrut(400));
         employeeWindow.add(Box.createVerticalStrut(100));
         employeeWindow.add(addEmpButton);
+        employeeWindow.add(removeEmpButton);
 
         employeeWindow.setSize(400,550);
         employeeWindow.setVisible(true);
