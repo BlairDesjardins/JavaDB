@@ -17,6 +17,9 @@ public class AdminTab extends EmployeeTab{
 
     String typeOrdered, prodOrdered, amountOrdered;
 
+    JLabel empNum, empName, SIN, dept;
+    JTextField empNumField, empNameField, SINField, deptField;
+
     public AdminTab() {
         super();
 
@@ -140,15 +143,15 @@ public class AdminTab extends EmployeeTab{
 
         final DatabaseButton addEmpButton = new DatabaseButton("Add Employee");
 
-        JLabel empNum = new JLabel("Employee Number:");
-        JLabel empName = new JLabel("Employee Name:");
-        JLabel SIN = new JLabel("SIN:");
-        JLabel dept = new JLabel("Department:");
+        empNum = new JLabel("Employee Number:");
+        empName = new JLabel("Employee Name:");
+        SIN = new JLabel("SIN:");
+        dept = new JLabel("Department:");
 
-        JTextField empNumField = new JTextField(2);
-        JTextField empNameField = new JTextField(15);
-        JTextField SINField = new JTextField(9);
-        JTextField deptField = new JTextField(2);
+        empNumField = new JTextField(2);
+        empNameField = new JTextField(15);
+        SINField = new JTextField(9);
+        deptField = new JTextField(2);
 
         addEmpButton.addActionListener(new ActionListener() {
             @Override
