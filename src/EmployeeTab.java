@@ -13,6 +13,8 @@ public class EmployeeTab extends CustomerTab {
     private static final String findMgrQuery = "SELECT E.EMPNAME, M.DEPNUM FROM EMPLOYEE E, MANAGES M WHERE E.EMPNUM=M.EMPNUM";
     private static final String findEmpsQuery = "SELECT E.EMPNAME FROM EMPLOYEE E";
     private static final String issueSaleQuery = "INSERT INTO BUYS (PRODUCTNO, FROMSTAFF, CUSTOMER) VALUES (";
+    private static final String checkCustomerQuery = "SELECT COUNT(*) FROM CUSTOMER WHERE EMAIL = '";
+    private static final String addCustomerQuery = "INSERT INTO CUSTOMER (EMAIL) VALUES ('";
 
 
     private int currentEmployee = 2;
@@ -37,6 +39,8 @@ public class EmployeeTab extends CustomerTab {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText().toUpperCase();
+                if (!issueSaleButton.checkQuery(checkCustomerQuery + email + "'"))
+                    issueSaleButton.executeCommand(addCustomerQuery + email + "')");
                 String productNo = productNoField.getText();
                 String command = issueSaleQuery + productNo + ", " + currentEmployee + ", '" + email + "')";
                 issueSaleButton.executeCommand(command);
@@ -46,7 +50,6 @@ public class EmployeeTab extends CustomerTab {
         findManagersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                findManagersButton.executeCommand(findMgrQuery);
                 findManagersButton.makeTableFromQuery(findMgrQuery);
             }
         });
@@ -54,12 +57,9 @@ public class EmployeeTab extends CustomerTab {
         findEmpsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                findEmpsButton.executeCommand(findEmpsQuery);
                 findEmpsButton.makeTableFromQuery(findEmpsQuery);
             }
         });
-
-
 
 
         JPanel issueSalePanel = new JPanel();

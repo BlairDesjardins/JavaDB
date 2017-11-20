@@ -175,6 +175,53 @@ public class DatabaseButton extends JButton {
         return null;
     }
 
+
+    public boolean checkQuery(String command) {
+
+        try {
+            boolean result;
+            //Register JDBC Driver
+            Class.forName(JDBC_DRIVER);
+
+            //Open connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //Execute query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(command);
+            if (rs.next()) result = true;
+            else result = false;
+
+            System.out.println("Command executed!");
+
+            stmt.close();
+            conn.close();
+            return result;
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(stmt != null) {
+                    stmt.close();
+                }
+            } catch(SQLException se2) {}
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return false;
+    }
+
     public static DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
 
         ResultSetMetaData metaData = rs.getMetaData();
