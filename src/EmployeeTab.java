@@ -15,6 +15,8 @@ public class EmployeeTab extends CustomerTab {
     private static final String issueSaleQuery = "INSERT INTO BUYS (PRODUCTNO, FROMSTAFF, CUSTOMER) VALUES (";
     private static final String checkCustomerQuery = "SELECT COUNT(*) FROM CUSTOMER WHERE EMAIL = '";
     private static final String addCustomerQuery = "INSERT INTO CUSTOMER (EMAIL) VALUES ('";
+    private static final String updateStockNum = "UPDATE MERCHANDISE SET STOCKNUM = STOCKNUM - 1 WHERE STOCKNUM > 0 AND PRODUCTNO = ";
+
 
 
     private int currentEmployee = 2;
@@ -44,6 +46,7 @@ public class EmployeeTab extends CustomerTab {
                 String productNo = productNoField.getText();
                 String command = issueSaleQuery + productNo + ", " + currentEmployee + ", '" + email + "')";
                 issueSaleButton.executeCommand(command);
+                issueSaleButton.executeCommand(updateStockNum + productNo);
             }
         });
 

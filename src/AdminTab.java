@@ -8,6 +8,8 @@ public class AdminTab extends EmployeeTab{
 
     private static final String viewSupps = "SELECT * FROM SUPPLIER";
     private static final String placeOrder = "INSERT INTO ORDEREDFROM(BUYCOST,QUANTITY,PRODUCTNO,SUPPLIERNAME) VALUES(";
+    private static final String addEmployee = "INSERT INTO EMPLOYEE (EMPNUM, EMPNAME, SIN) VALUES (";
+    private static final String addEmployeeToDept = "INSERT INTO WORKSIN (EMPNUM, DEPNUM) VALUES (";
 
     DatabaseButton supplierButton, mailingListButton, refundButton, empDetailsButton, merchButton, orderButton;
     JPanel supplierPanel, mailingListPanel, refundPanel, empDetailsPanel,merchPanel,orderPanel;
@@ -19,25 +21,26 @@ public class AdminTab extends EmployeeTab{
         super();
 
         supplierPanel = new JPanel();
+        empDetailsPanel = new JPanel();
         mailingListPanel = new JPanel();
         refundPanel = new JPanel();
-        empDetailsPanel = new JPanel();
         merchPanel = new JPanel();
         orderPanel = new JPanel();
 
         supplierPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+        empDetailsPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         mailingListPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         refundPanel.setBorder(BorderFactory.createRaisedBevelBorder());
-        empDetailsPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         merchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         orderPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 
         setSupplierPanel();
+        setEmpDetailsPanel();
 
         this.add(supplierPanel);
+        this.add(empDetailsPanel);
         this.add(mailingListPanel);
         this.add(refundPanel);
-        this.add(empDetailsPanel);
         this.add(merchPanel);
         this.add(orderPanel);
     }
@@ -82,8 +85,6 @@ public class AdminTab extends EmployeeTab{
         id = new JTextField(8);
         quantity = new JTextField(5);
 
-
-
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,7 +98,6 @@ public class AdminTab extends EmployeeTab{
                 }
             }
         });
-
 
         orderWindow.setLayout(new FlowLayout());
         orderWindow.add(Box.createVerticalStrut(100));
@@ -115,15 +115,79 @@ public class AdminTab extends EmployeeTab{
         orderWindow.add(Box.createVerticalStrut(100));
         orderWindow.add(submitButton);
 
-
         orderWindow.setSize(400,450);
         orderWindow.setVisible(true);
 
     }
 
+    public void setEmpDetailsPanel() {
+        final DatabaseButton manEmps = new DatabaseButton("Manage Employees");
+
+        manEmps.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createEmployeeWindow();
+            }
+        });
+
+        empDetailsPanel.add(manEmps);
+
+    }
+
+    public void createEmployeeWindow() {
+
+        final JFrame employeeWindow = new JFrame("Employee Manager");
+
+        final DatabaseButton addEmpButton = new DatabaseButton("Add Employee");
+
+        JLabel empNum = new JLabel("Employee Number:");
+        JLabel empName = new JLabel("Employee Name:");
+        JLabel SIN = new JLabel("SIN:");
+        JLabel dept = new JLabel("Department:");
+
+        JTextField empNumField = new JTextField(2);
+        JTextField empNameField = new JTextField(15);
+        JTextField SINField = new JTextField(9);
+        JTextField deptField = new JTextField(2);
+
+        addEmpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String empNumString = empNumField.getText();
+                String empNameString = empNameField.getText();
+                String SINString = SINField.getText();
+                String deptString = deptField.getText();
+                addEmpButton.executeCommand(addEmployee + empNumString + ", '" + empNameString + "', " + SINString + ")");
+                addEmpButton.executeCommand(addEmployeeToDept + empNumString + ", " + deptString + ")");
+            }
+        });
+
+        employeeWindow.setLayout(new FlowLayout());
+        employeeWindow.add(Box.createVerticalStrut(100));
+        employeeWindow.add(empNum);
+        employeeWindow.add(empNumField);
+        employeeWindow.add(Box.createHorizontalStrut(400));
+        employeeWindow.add(Box.createVerticalStrut(100));
+        employeeWindow.add(empName);
+        employeeWindow.add(empNameField);
+        employeeWindow.add(Box.createHorizontalStrut(400));
+        employeeWindow.add(Box.createVerticalStrut(100));
+        employeeWindow.add(SIN);
+        employeeWindow.add(SINField);
+        employeeWindow.add(Box.createHorizontalStrut(400));
+        employeeWindow.add(Box.createVerticalStrut(100));
+        employeeWindow.add(dept);
+        employeeWindow.add(deptField);
+        employeeWindow.add(Box.createHorizontalStrut(400));
+        employeeWindow.add(Box.createVerticalStrut(100));
+        employeeWindow.add(addEmpButton);
+
+        employeeWindow.setSize(400,550);
+        employeeWindow.setVisible(true);
+    }
+
     public void setMailingListPanel(){}
     public void setRefundPanel(){}
-    public void setEmpDetailsPanel(){}
     public void setMerchPanel(){}
     public void setOrderPanel(){}
 }
