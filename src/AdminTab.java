@@ -134,8 +134,8 @@ public class AdminTab extends EmployeeTab{
                 createEmployeeWindow();
             }
         });
-
-        empDetailsPanel.add(manEmps);
+        super.staffSearchPanel.add(manEmps);
+//        empDetailsPanel.add(manEmps);
 
     }
 

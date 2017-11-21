@@ -20,7 +20,7 @@ public class EmployeeTab extends CustomerTab {
 
 
     private int currentEmployee = 2;
-
+    JPanel staffSearchPanel;
     JLabel customerEmailLabel, productNoLabel;
     JTextField emailField, productNoField;
     DatabaseButton issueSaleButton, findManagersButton, findEmpsButton;
@@ -75,7 +75,7 @@ public class EmployeeTab extends CustomerTab {
         issueSalePanel.add(productNoField);
         issueSalePanel.add(issueSaleButton);
 
-        JPanel staffSearchPanel = new JPanel();
+        staffSearchPanel = new JPanel();
         staffSearchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         staffSearchPanel.setLayout(new FlowLayout());
         staffSearchPanel.add(findEmpsButton);
