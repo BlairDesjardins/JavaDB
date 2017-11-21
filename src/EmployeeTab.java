@@ -13,7 +13,7 @@ public class EmployeeTab extends CustomerTab {
     private static final String findMgrQuery = "SELECT E.EMPNAME, M.DEPNUM FROM EMPLOYEE E, MANAGES M WHERE E.EMPNUM=M.EMPNUM";
     private static final String findEmpsQuery = "SELECT E.EMPNAME FROM EMPLOYEE E";
     private static final String issueSaleQuery = "INSERT INTO BUYS (PRODUCTNO, FROMSTAFF, CUSTOMER) VALUES (";
-    private static final String checkCustomerQuery = "SELECT COUNT(*) FROM CUSTOMER WHERE EMAIL = '";
+    private static final String checkCustomerQuery = "SELECT EMAIL FROM CUSTOMER WHERE EMAIL = '";
     private static final String addCustomerQuery = "INSERT INTO CUSTOMER (EMAIL) VALUES ('";
     private static final String updateStockNum = "UPDATE MERCHANDISE SET STOCKNUM = STOCKNUM - 1 WHERE STOCKNUM > 0 AND PRODUCTNO = ";
 
