@@ -12,15 +12,21 @@ public class AdminTab extends EmployeeTab{
     private static final String addEmployeeToDept = "INSERT INTO WORKSIN (EMPNUM, DEPNUM) VALUES (";
     private static final String removeEmployee = "DELETE FROM EMPLOYEE WHERE EMPNUM = ";
     private static final String removeEmployeeFromDept = "DELETE FROM WORKSIN WHERE EMPNUM = ";
+    private static final String addOrderToStock = "UPDATE MERCHANDISE SET STOCKNUM = STOCKNUM +";
+    private static final String stockReturn = "UPDATE MERCHANDISE SET STOCKNUM = STOCKNUM + 1 WHERE PRODUCTNO=";
+    private static final String issueRefund = "DELETE FROM BUYS WHERE ID =";
+    private static final String getProduct = "SELECT PRODUCTNO FROM BUYS WHERE ID =";
+
 
     DatabaseButton supplierButton, mailingListButton, refundButton, empDetailsButton, merchButton, orderButton;
     JPanel supplierPanel, mailingListPanel, refundPanel, empDetailsPanel,merchPanel,orderPanel;
-    JTextField id, quantity;
+    JTextField id, quantity, refundField;
 
-    String typeOrdered, prodOrdered, amountOrdered;
+    String typeOrdered, prodOrdered, amountOrdered, refundString, prodString;
 
-    JLabel empNum, empName, SIN, dept;
-    JTextField empNumField, empNameField, SINField, deptField;
+    //Employee Window Stuff
+    JLabel empNum, empName, pstn, SIN, salary, address, dept, refund;
+    JTextField empNumField, empNameField, pstnField, SINField, salaryField, addressField, deptField, emailField, usernameField, passwordField;
 
     public AdminTab() {
         super();
@@ -41,13 +47,14 @@ public class AdminTab extends EmployeeTab{
 
         setSupplierPanel();
         setEmpDetailsPanel();
+        setRefundPanel();
 
         this.add(supplierPanel);
-        this.add(empDetailsPanel);
-        this.add(mailingListPanel);
+//        this.add(empDetailsPanel);
+//        this.add(mailingListPanel);
         this.add(refundPanel);
-        this.add(merchPanel);
-        this.add(orderPanel);
+//        this.add(merchPanel);
+//        this.add(orderPanel);
     }
 
     public void setSupplierPanel(){
@@ -100,6 +107,7 @@ public class AdminTab extends EmployeeTab{
                 String cName = submitButton.executeCommand("SELECT COMPANYNAME FROM SUPPLIER S WHERE S.MERCHTYPE='" + typeOrdered + "'","COMPANYNAME");
                 if(cName != null) {
                     submitButton.executeCommand(placeOrder + amountOrdered + "," + amountOrdered + "," + prodOrdered + ",'" + cName + "')");
+                    updateStockedItems(prodOrdered, amountOrdered);
                 }
             }
         });
@@ -148,12 +156,19 @@ public class AdminTab extends EmployeeTab{
 
         empNum = new JLabel("Employee Number:");
         empName = new JLabel("Employee Name:");
+        pstn = new JLabel("Position");
         SIN = new JLabel("SIN:");
+        salary = new JLabel("Salary:");
+        address = new JLabel("Address");
         dept = new JLabel("Department:");
 
         empNumField = new JTextField(2);
         empNameField = new JTextField(15);
+        pstnField = new JTextField(10);
         SINField = new JTextField(9);
+        salaryField = new JTextField(9);
+        addressField = new JTextField(15);
+        emailField = new JTextField(15);
         deptField = new JTextField(2);
 
         addEmpButton.addActionListener(new ActionListener() {
@@ -202,8 +217,33 @@ public class AdminTab extends EmployeeTab{
         employeeWindow.setVisible(true);
     }
 
+    public void updateStockedItems(String id, String quantity){
+        DatabaseButton tempButton = new DatabaseButton("temp");
+        System.out.println(addOrderToStock + quantity + " WHERE PRODUCTNO=" + id);
+        tempButton.executeCommand(addOrderToStock + quantity + "WHERE PRODUCTNO=" + id);
+
+    }
     public void setMailingListPanel(){}
-    public void setRefundPanel(){}
-    public void setMerchPanel(){}
-    public void setOrderPanel(){}
+    public void setRefundPanel(){
+        refund = new JLabel("Refund ID:");
+        refundField = new JTextField(5);
+        refundButton = new DatabaseButton("Issue Refund");
+
+        refundButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                refundButton.executeCommand();
+                refundString = refundField.getText();
+                prodString = refundButton.executeCommand(getProduct + refundString,"PRODUCTNO");
+                System.out.println(prodString);
+                refundButton.executeCommand(issueRefund + refundString);
+                refundButton.executeCommand(stockReturn + prodString);
+
+            }
+        });
+        refundPanel.add(refund);
+        refundPanel.add(refundField);
+        refundPanel.add(refundButton);
+
+    }
 }
