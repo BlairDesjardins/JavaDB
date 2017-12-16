@@ -50,11 +50,7 @@ public class AdminTab extends EmployeeTab{
         setRefundPanel();
 
         this.add(supplierPanel);
-//        this.add(empDetailsPanel);
-//        this.add(mailingListPanel);
         this.add(refundPanel);
-//        this.add(merchPanel);
-//        this.add(orderPanel);
     }
 
     public void setSupplierPanel(){
@@ -223,7 +219,6 @@ public class AdminTab extends EmployeeTab{
         tempButton.executeCommand(addOrderToStock + quantity + "WHERE PRODUCTNO=" + id);
 
     }
-    public void setMailingListPanel(){}
     public void setRefundPanel(){
         refund = new JLabel("Refund ID:");
         refundField = new JTextField(5);
@@ -232,7 +227,6 @@ public class AdminTab extends EmployeeTab{
         refundButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                refundButton.executeCommand();
                 refundString = refundField.getText();
                 prodString = refundButton.executeCommand(getProduct + refundString,"PRODUCTNO");
                 System.out.println(prodString);
